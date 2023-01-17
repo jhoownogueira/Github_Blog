@@ -1,5 +1,5 @@
 
-import { HomeContainer, Perfil } from "./style";
+import { HomeContainer, Input, Perfil } from "./style";
 import photoPefil from "../../assets/jhoow.jpg";
 import iconGithub from "../../assets/icons/github.svg";
 import iconCompany from "../../assets/icons/company.svg";
@@ -42,6 +42,13 @@ export function Home() {
           </div>
         </div>
       </Perfil>
+      <Input>
+      <div className="title">
+      <p>Publicações</p>
+      <span>6 publicações</span>
+      </div>
+      <input type="text" placeholder="Buscar conteúdo" />
+      </Input>
     </HomeContainer>
   );
 }

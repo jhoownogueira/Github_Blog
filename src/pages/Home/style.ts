@@ -2,13 +2,16 @@ import styled from "styled-components";
 
 export const HomeContainer = styled.div`
   width: 100%;
+  padding: 0 1rem;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 export const Perfil = styled.div`
-  width: 54rem;
+  width: 100%;
+  max-width: 54rem;
   height: 13.25rem;
   display: flex;
   justify-content: center;
@@ -73,6 +76,59 @@ export const Perfil = styled.div`
         font-size: 1rem;
         color: ${(props) => props.theme["base-subtitle"]};
       }
+    }
+  }
+`;
+
+export const Input = styled.div`
+  width: 100%;
+  max-width: 54rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4.5rem;
+
+  .title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+
+    p {
+      font-weight: 700;
+      font-size: 1.125rem;
+      line-height: 160%;
+      color: ${(props) => props.theme["base-subtitle"]};
+    }
+
+    span {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 160%;
+      color: ${(props) => props.theme["base-span"]};
+    }
+  }
+
+  input {
+    width: 100%;
+    height: 3.125rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    background: ${(props) => props.theme["base-input"]};
+    border: 1px solid ${(props) => props.theme["base-border"]};
+    font-weight: 400;
+    font-size: 1rem;
+    color: ${(props) => props.theme["base-text"]};
+
+    &::placeholder {
+      font-weight: 400;
+      font-size: 1rem;
+      color: ${(props) => props.theme["base-label"]};
+    }
+
+    &:focus {
+      outline: 0;
+      border: 1px solid ${(props) => props.theme.blue};
     }
   }
 `;
