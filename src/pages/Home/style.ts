@@ -132,3 +132,52 @@ export const Input = styled.div`
     }
   }
 `;
+
+export const ContainerCards = styled.div`
+  width: 100%;
+  max-width: 54rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 2rem 0;
+`
+
+export const Cards = styled.div`
+  width: 100%;
+  height: 16.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  border-radius: 10px;
+  background: ${(props) => props.theme["base-post"]};
+
+  .title {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    h3 {
+      width: 80%;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: ${(props) => props.theme["base-title"]};
+    }
+
+    span {
+      width: 20%;
+      text-align: right;
+      display: block;
+      padding-top: 5px;
+      font-size: 0.875rem;
+      line-height: 160%;
+      color: ${(props) => props.theme["base-span"]};
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 160%;
+    color: ${(props) => props.theme["base-text"]};
+  }
+`;
