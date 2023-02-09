@@ -103,14 +103,14 @@ export function Home() {
             <Cards key={issue.id}>
               <div className="title">
                 <h3>J{issue.title}</h3>
-                <span>{formatDistanceToNow(new Date(issue.created_at), {
-                      addSuffix: true,
-                      locale: ptBR,
-                    })}</span>
+                <span>
+                  {formatDistanceToNow(new Date(issue.created_at), {
+                    addSuffix: true,
+                    locale: ptBR,
+                  })}
+                </span>
               </div>
-              <p>
-                {issue.body}
-              </p>
+              <p>{issue.body}</p>
             </Cards>
           );
         })}
