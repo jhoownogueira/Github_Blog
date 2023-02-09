@@ -137,10 +137,10 @@ export const ContainerCards = styled.div`
   width: 100%;
   max-width: 54rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 50%);
   gap: 1rem;
   padding: 2rem 0;
-`
+`;
 
 export const Cards = styled.div`
   width: 100%;
@@ -179,5 +179,10 @@ export const Cards = styled.div`
     font-size: 1rem;
     line-height: 160%;
     color: ${(props) => props.theme["base-text"]};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
   }
 `;

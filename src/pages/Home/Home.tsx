@@ -1,4 +1,3 @@
-
 import { Cards, ContainerCards, HomeContainer, Input, Perfil } from "./style";
 import photoPefil from "../../assets/jhoow.jpg";
 import iconGithub from "../../assets/icons/github.svg";
@@ -7,6 +6,8 @@ import iconFollowers from "../../assets/icons/followers.svg";
 import iconOpen from "../../assets/icons/open.svg";
 import { api } from "../../services/api";
 import { useEffect, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 
 interface ProfileProps {
   name: string;
@@ -18,18 +19,26 @@ interface ProfileProps {
   followers: string;
 }
 
+interface IssuesProps {
+  id: number;
+  title: string;
+  body: string;
+  created_at: string;
+}
+
 export function Home() {
   const [infoProfile, setInfoProfile] = useState<ProfileProps>();
+  const [issues, setIssues] = useState<IssuesProps[]>([]);
 
   useEffect(() => {
     loadProfileGit();
-  }, [])
+    loadIssues();
+  }, []);
 
   async function loadProfileGit() {
-    const response = await api
-    .get('/users/jhoownogueira')
-    .then(response => {
-      let { name, avatar_url, login, bio, html_url, company, followers } = response.data;
+    const response = await api.get("/users/jhoownogueira").then((response) => {
+      let { name, avatar_url, login, bio, html_url, company, followers } =
+        response.data;
       setInfoProfile({
         name: name,
         avatar: avatar_url,
@@ -37,9 +46,17 @@ export function Home() {
         bio: bio,
         url: html_url,
         company: company,
-        followers: followers
-      })
-    })
+        followers: followers,
+      });
+    });
+  }
+
+  async function loadIssues() {
+    const response = await api
+      .get("/repos/rocketseat-education/reactjs-github-blog-challenge/issues")
+      .then((response) => {
+        setIssues(response.data);
+      });
   }
 
   return (
@@ -50,83 +67,53 @@ export function Home() {
         </div>
         <div className="info">
           <div className="title">
-          <h1>{infoProfile?.name}</h1>
-          <a href={infoProfile?.url} target='_blank'>
-            GITHUB
-            <img src={iconOpen} />
-          </a>
+            <h1>{infoProfile?.name}</h1>
+            <a href={infoProfile?.url} target="_blank">
+              GITHUB
+              <img src={iconOpen} />
+            </a>
           </div>
-          <p>
-            {infoProfile?.bio}
-          </p>
+          <p>{infoProfile?.bio}</p>
           <div className="info_perfil">
-            <a href={infoProfile?.url} target='_blank'>
-            <img src={iconGithub} />
-            <span>{infoProfile?.username}</span>
+            <a href={infoProfile?.url} target="_blank">
+              <img src={iconGithub} />
+              <span>{infoProfile?.username}</span>
             </a>
             <a href="">
-            <img src={iconCompany} />
-            <span>{infoProfile?.company}</span>
+              <img src={iconCompany} />
+              <span>{infoProfile?.company}</span>
             </a>
             <a href="">
-            <img src={iconFollowers} />
-            <span>{infoProfile?.followers} Seguidores</span>
+              <img src={iconFollowers} />
+              <span>{infoProfile?.followers} Seguidores</span>
             </a>
           </div>
         </div>
       </Perfil>
       <Input>
-      <div className="title">
-      <p>Publicações</p>
-      <span>6 publicações</span>
-      </div>
-      <input type="text" placeholder="Buscar conteúdo" />
+        <div className="title">
+          <p>Publicações</p>
+          <span>6 publicações</span>
+        </div>
+        <input type="text" placeholder="Buscar conteúdo" />
       </Input>
       <ContainerCards>
-      <Cards>
-        <div className="title">
-          <h3>JavaScript data types and data structures</h3>
-          <span>Há 1 dia</span>
-        </div>
-        <p>
-        Programming languages all have built-in data structures, 
-        but these often differ from one language to another. 
-        This article attempts to list the built-in data structures available in 
-        </p>
-      </Cards>
-      <Cards>
-        <div className="title">
-          <h3>JavaScript data types and data structures</h3>
-          <span>Há 1 dia</span>
-        </div>
-        <p>
-        Programming languages all have built-in data structures, 
-        but these often differ from one language to another. 
-        This article attempts to list the built-in data structures available in 
-        </p>
-      </Cards>
-      <Cards>
-        <div className="title">
-          <h3>JavaScript data types and data structures</h3>
-          <span>Há 1 dia</span>
-        </div>
-        <p>
-        Programming languages all have built-in data structures, 
-        but these often differ from one language to another. 
-        This article attempts to list the built-in data structures available in 
-        </p>
-      </Cards>
-      <Cards>
-        <div className="title">
-          <h3>JavaScript data types and data structures</h3>
-          <span>Há 1 dia</span>
-        </div>
-        <p>
-        Programming languages all have built-in data structures, 
-        but these often differ from one language to another. 
-        This article attempts to list the built-in data structures available in 
-        </p>
-      </Cards>
+        {issues.map((issue) => {
+          return (
+            <Cards key={issue.id}>
+              <div className="title">
+                <h3>J{issue.title}</h3>
+                <span>{formatDistanceToNow(new Date(issue.created_at), {
+                      addSuffix: true,
+                      locale: ptBR,
+                    })}</span>
+              </div>
+              <p>
+                {issue.body}
+              </p>
+            </Cards>
+          );
+        })}
       </ContainerCards>
     </HomeContainer>
   );
